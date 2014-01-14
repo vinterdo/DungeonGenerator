@@ -9,8 +9,10 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include <windows.h>
+#include <map>
    
 #include "Point.h"  
+#include "TextureManager.h"
 #include "WorldMap.h"  
 #include "DungeonGen.h"  
 
@@ -19,10 +21,12 @@ using namespace std;
 class Engine
 {
       SDL_Surface *screen;
+      TextureManager* TexManager;
       public:
       
       Engine()
       {
+              TexManager = new TextureManager();
               cmain();
       } 
       
@@ -30,6 +34,7 @@ class Engine
       
       void cmain()
       {
+           LoadContent();
            
            DungeonGen* Generator = new DungeonGen(150);
            const float StepTime = 0.03f;
@@ -83,7 +88,18 @@ class Engine
                             break;
                    }
                }
-               //draw
+               Draw();
+               SDL_Flip( screen );
            }
+      }
+      
+      void LoadContent()
+      {
+           TexManager->LoadTex("Content/Textures/BlockWall.bmp");
+      }
+      
+      void Draw()
+      {
+           SDL_BlitSurface( TexManager->GetTex("Content/Textures/BlockWall.bmp"), NULL, screen, NULL );
       }
 };

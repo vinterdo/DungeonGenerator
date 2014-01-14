@@ -44,17 +44,6 @@ class WorldMap
           CreateDungeon(SizeX, SizeY, 100);
       }
       
-      void Draw()
-      {
-             for(int y = 0; y < Size->Y; y++)
-             {
-                     for(int x = 0; x < Size->X; x++)
-                     {
-                             printf("%c", Map[(y * Size->X + x)]);
-                     }
-             std::cout << std::endl;
-             }
-      }
       
       void SetPos(int x, int y, char value)
       {

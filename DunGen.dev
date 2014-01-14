@@ -1,7 +1,7 @@
 [Project]
 FileName=DunGen.dev
 Name=DunGen
-UnitCount=5
+UnitCount=6
 Type=0
 Ver=1
 ObjFiles=
@@ -91,6 +91,16 @@ BuildCmd=
 FileName=WorldMap.h
 CompileCpp=1
 Folder=DunGen
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
+FileName=TextureManager.h
+CompileCpp=1
+Folder=
 Compile=1
 Link=1
 Priority=1000

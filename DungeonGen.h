@@ -22,7 +22,7 @@ class DungeonGen
       
       void Draw()
       {
-           Map->Draw();
+           
       }
       
       void PollInput()
