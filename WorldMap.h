@@ -56,7 +56,7 @@ class WorldMap
            Map[(y * Size->X + x)] = value;
       }
       
-      char GetCell(int x, int y)
+      char GetPos(int x, int y)
       {
            return Map[(y * Size->X + x)];
       }
@@ -77,4 +77,87 @@ class WorldMap
  
         return min + i;
       }
+      
+      
+       bool MakeCorridor(int x, int y, int lenght, int direction)
+      {
+        int Lenght = GetRand(2, lenght);
+        char Floor = tileCorridor;
+        int Dir = 0;
+        if(direction > 0 && direction < 4) Dir = direction;
+ 
+        int xtemp = 0;
+        int ytemp = 0;
+ 
+        switch(Dir)
+        {
+            case 0:
+            {
+                if(x < 0 || x > Size->X) return false;
+                else xtemp = x;
+ 
+                for(ytemp = y; ytemp > (y- Lenght); ytemp--)
+                {
+                    if(ytemp < 0 || ytemp > Size->Y) return false;
+                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                }
+ 
+                for(ytemp = y; ytemp > (y - Lenght); ytemp--)
+                {
+                    SetPos(xtemp, ytemp, Floor);
+                }
+                break;
+ 
+            }
+            case 1:
+            {
+                if(y < 0 || y > Size->Y) return false;
+                else ytemp = y;
+ 
+                for(xtemp = x; xtemp < (x + Lenght); xtemp++)
+                {
+                    if(xtemp < 0 || xtemp > Size->X) return false;
+                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                }
+ 
+                for(xtemp = x; xtemp < (x + Lenght); xtemp++)
+                {
+                    SetPos(xtemp, ytemp, Floor);
+                }
+                break;
+            }
+            case 2:
+            {
+                if(x < 0 || x > Size->X) return false;
+                else xtemp = x;
+ 
+                for(ytemp = y; ytemp < (y + Lenght); ytemp++)
+                {
+                    if(ytemp < 0 || ytemp > Size->Y) return false;
+                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                }
+                for (ytemp = y; ytemp < (y+Lenght); ytemp++){
+                    SetPos(xtemp, ytemp, Floor);
+                }
+			break;
+            }
+            case 3:
+            {
+                if (ytemp < 0 || ytemp > Size->Y) return false;
+                else ytemp = y;
+ 
+                for (xtemp = x; xtemp > (x-Lenght); xtemp--){
+                    if (xtemp < 0 || xtemp > Size->X) return false;
+                    if (GetPos(xtemp, ytemp) != tileUnused) return false;
+                }
+ 
+                for (xtemp = x; xtemp > (x-Lenght); xtemp--){
+                    SetPos(xtemp, ytemp, Floor);
+                }
+                break;
+            }
+		}
+		return true;
+	}
+      
 };
