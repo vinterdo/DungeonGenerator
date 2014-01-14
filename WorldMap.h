@@ -3,7 +3,27 @@ class WorldMap
 {
       public:
       Point* Size;
+      Point* Max;
       char* Map;
+      
+      int Objects;
+      int ChanceRoom;
+      int ChanceCorridor;
+      
+      long OldSeed;
+      
+      enum
+      {
+        tileUnused = 0,
+        tileDirtWall,
+        tileDirtFloor,
+        tileStoneWall,
+        tileCorridor,
+        tileDoor,
+        tileUpStairs,
+        tileDownStairs,
+        tileChest
+      };
       
       WorldMap(int SizeX, int SizeY)
       {
@@ -34,5 +54,27 @@ class WorldMap
       void SetPos(int x, int y, char value)
       {
            Map[(y * Size->X + x)] = value;
+      }
+      
+      char GetCell(int x, int y)
+      {
+           return Map[(y * Size->X + x)];
+      }
+      
+      int GetRand(int min, int max)
+      {
+        time_t seed;
+        seed = time(NULL) + OldSeed;
+        OldSeed = seed;
+ 
+        srand(seed);
+ 
+        int n = max - min + 1;
+        int i = rand() % n;
+ 
+        if(i < 0)
+            i = -i;
+ 
+        return min + i;
       }
 };

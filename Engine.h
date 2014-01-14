@@ -1,3 +1,18 @@
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <string.h>
+#include <stdlib.h>
+#include <conio.h> 
+#include <time.h>  
+#include <time.h>
+   
+#include "Point.h"  
+#include "WorldMap.h"  
+#include "DungeonGen.h"  
+
+using namespace std; 
+
 class Engine
 {
       public:
