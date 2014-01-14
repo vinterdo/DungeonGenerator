@@ -1,30 +1,33 @@
-# Project: Project1
+# Project: DunGen
 # Makefile created by Dev-C++ 4.9.9.2
 
 CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
-RES  = 
+RES  = DunGen_private.res
 OBJ  = main.o $(RES)
 LINKOBJ  = main.o $(RES)
-LIBS =  -L"D:/Dev-Cpp/lib"  
+LIBS =  -L"D:/Dev-Cpp/lib" -mwindows -lmingw32 -lSDLmain -lSDL 
 INCS =  -I"D:/Dev-Cpp/include" 
 CXXINCS =  -I"D:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Dev-Cpp/include/c++/3.4.2"  -I"D:/Dev-Cpp/include" 
-BIN  = DungeonGen.exe
+BIN  = DunGen.exe
 CXXFLAGS = $(CXXINCS)  
-CFLAGS = $(INCS)  
+CFLAGS = $(INCS) -Dmain=SDL_main 
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before DungeonGen.exe all-after
+all: all-before DunGen.exe all-after
 
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CPP) $(LINKOBJ) -o "DungeonGen.exe" $(LIBS)
+	$(CPP) $(LINKOBJ) -o "DunGen.exe" $(LIBS)
 
-main.o: main.cpp
-	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+main.o: main.c
+	$(CPP) -c main.c -o main.o $(CXXFLAGS)
+
+DunGen_private.res: DunGen_private.rc 
+	$(WINDRES) -i DunGen_private.rc --input-format=rc -o DunGen_private.res -O coff 

@@ -6,6 +6,9 @@
 #include <conio.h> 
 #include <time.h>  
 #include <time.h>
+#include <stdio.h>
+#include <SDL/SDL.h>
+#include <windows.h>
    
 #include "Point.h"  
 #include "WorldMap.h"  
@@ -15,47 +18,72 @@ using namespace std;
 
 class Engine
 {
+      SDL_Surface *screen;
       public:
       
       Engine()
       {
               cmain();
-      }
+      } 
+      
+      private:
       
       void cmain()
       {
            
-    DungeonGen* Generator = new DungeonGen(150);
-    const float StepTime = 0.03f;
+           DungeonGen* Generator = new DungeonGen(150);
+           const float StepTime = 0.03f;
     
-    Generator->Initalize();
+           Generator->Initalize();
     
-    float dt = 0;
-    float lastUpdate = time(NULL);
-    float accumulator = 0;
+           float dt = 0;
+           float lastUpdate = time(NULL);
+           float accumulator = 0;
     
+           // SDL STUFF
     
-    while(true)
-    { 
-        dt = time(NULL) - lastUpdate;
-        lastUpdate += dt;
-        
-        accumulator += dt;
-        
-        Generator->PollInput();
-        while(accumulator > StepTime)
-        {
-            Generator->Update();
-            
-            accumulator -= StepTime;
-        
-        }
-        
-        
-           Generator->Map->SetPos(2, 2, ' ');
-        system("cls");
-        Generator -> Draw();
-    }
-    
+           char *msg;
+           int done;
+
+           if (SDL_Init (SDL_INIT_VIDEO) < 0)
+           {
+               sprintf (msg, "Couldn't initialize SDL: %s\n", SDL_GetError ());
+               MessageBox (0, msg, "Error", MB_ICONHAND); 
+               free (msg);
+               exit (1);
+           }
+           atexit (SDL_Quit);
+
+           screen = SDL_SetVideoMode (640, 480, 16, SDL_SWSURFACE | SDL_DOUBLEBUF);
+           if (screen == NULL)
+           {
+               sprintf (msg, "Couldn't set 640x480x16 video mode: %s\n",
+               SDL_GetError ());
+               MessageBox (0, msg, "Error", MB_ICONHAND); 
+               free (msg);
+               exit (2);
+           }
+           SDL_WM_SetCaption ("SDL MultiMedia Application", NULL);
+
+           done = 0;
+           while (!done)
+           {
+               SDL_Event event;
+
+               while (SDL_PollEvent (&event))
+               {
+                   switch (event.type)
+                   {
+                       case SDL_KEYDOWN:
+                            break;
+                       case SDL_QUIT:
+                            done = 1;
+                            break;
+                       default:
+                            break;
+                   }
+               }
+               //draw
+           }
       }
 };

@@ -1,20 +1,20 @@
 [Project]
-FileName=DungeonGen.dev
-Name=Project1
+FileName=DunGen.dev
+Name=DunGen
 UnitCount=5
-Type=1
+Type=0
 Ver=1
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=
+PrivateResource=DunGen_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=
+Compiler=-Dmain=SDL_main
 CppCompiler=
-Linker=
+Linker=-lmingw32 -lSDLmain -lSDL
 IsCpp=1
-Icon=
+Icon=DunGen.ico
 ExeOutput=
 ObjectOutput=
 OverrideOutput=0
@@ -29,18 +29,8 @@ SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=
 
-[Unit2]
-FileName=DungeonGen.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit1]
-FileName=main.cpp
+FileName=main.c
 CompileCpp=1
 Folder=
 Compile=1
@@ -67,10 +57,20 @@ ProductName=
 ProductVersion=
 AutoIncBuildNr=0
 
-[Unit3]
-FileName=WorldMap.h
+[Unit2]
+FileName=DungeonGen.h
 CompileCpp=1
-Folder=
+Folder=DunGen
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=Engine.h
+CompileCpp=1
+Folder=DunGen
 Compile=1
 Link=1
 Priority=1000
@@ -80,7 +80,7 @@ BuildCmd=
 [Unit4]
 FileName=Point.h
 CompileCpp=1
-Folder=
+Folder=DunGen
 Compile=1
 Link=1
 Priority=1000
@@ -88,9 +88,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=Engine.h
+FileName=WorldMap.h
 CompileCpp=1
-Folder=
+Folder=DunGen
 Compile=1
 Link=1
 Priority=1000
