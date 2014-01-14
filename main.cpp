@@ -3,14 +3,14 @@
 #include <vector>
 #include <string.h>
 #include <stdlib.h>
-#include <conio.h>
-#include <time.h>
+#include <conio.h> 
+#include <time.h>  
+   
+#include "Point.h"  
+#include "WorldMap.h"  
+#include "DungeonGen.h"  
 
-#include "Point.h"
-#include "WorldMap.h"
-#include "DungeonGen.h"
-
-using namespace std;
+using namespace std; 
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     
     
     while(true)
-    {
+    { 
         dt = time(NULL) - lastUpdate;
         lastUpdate += dt;
         
@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
             accumulator -= StepTime;
         
         }
+        
+        
+           Generator->Map->SetPos(2, 2, ' ');
+        system("cls");
         Generator -> Draw();
     }
     
