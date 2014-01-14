@@ -9,12 +9,11 @@ class DungeonGen
       DungeonGen(int _CellsNum)
       {
           CellsNum = _CellsNum;
-          Map = new WorldMap(80, 25);
+          Map = new WorldMap(60, 20);
       }
       
       void Initalize()
       {
-           Map->SetPos(2, 2, ' ');
       }
       
       void Update()

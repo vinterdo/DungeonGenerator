@@ -28,6 +28,9 @@ class WorldMap
       WorldMap(int SizeX, int SizeY)
       {
           Size = new Point(SizeX, SizeY);
+          
+          ChanceRoom = 75;
+          ChanceCorridor = 25;
           //Map = new char[SizeX * SizeY];
           /*
           for(int y = 0; y < Size->Y; y++)
@@ -38,7 +41,7 @@ class WorldMap
                      }
              }*/
           
-          CreateDungeon(80, 25, 100);
+          CreateDungeon(SizeX, SizeY, 100);
       }
       
       void Draw()
