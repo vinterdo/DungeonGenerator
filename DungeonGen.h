@@ -9,7 +9,7 @@ class DungeonGen
       DungeonGen(int _CellsNum)
       {
           CellsNum = _CellsNum;
-          Map = new WorldMap(10, 10);
+          Map = new WorldMap(80, 25);
       }
       
       void Initalize()
