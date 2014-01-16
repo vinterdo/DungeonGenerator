@@ -13,6 +13,7 @@
    
 #include "Point.h"  
 #include "TextureManager.h"
+#include "Tile.h"
 #include "Player.h"
 #include "WorldMap.h"  
 #include "DungeonGen.h"  
