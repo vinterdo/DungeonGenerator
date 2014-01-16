@@ -13,6 +13,7 @@
    
 #include "Point.h"  
 #include "TextureManager.h"
+#include "Player.h"
 #include "WorldMap.h"  
 #include "DungeonGen.h"  
 
@@ -68,6 +69,7 @@ class Engine
 
                while (SDL_PollEvent (&event))
                {
+                   Generator->PollInput(&event);
                    switch (event.type)
                    {
                        case SDL_KEYDOWN:
@@ -79,6 +81,7 @@ class Engine
                             break;
                    }
                }
+               SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
                Draw();
                SDL_Flip( screen );
                //SDL_Delay(10);

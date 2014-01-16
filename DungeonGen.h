@@ -6,10 +6,13 @@ class DungeonGen
       int CellsNum;
       WorldMap* Map;
       
+      Player* Player1;
+      
       DungeonGen(int _CellsNum)
       {
           CellsNum = _CellsNum;
           Map = new WorldMap(60, 20);
+          Player1 = new Player();
       }
       
       void Initalize()
@@ -61,10 +64,20 @@ class DungeonGen
                            }
                    }
            }
+           
+           // Draw player
+           
+           SDL_Rect* offset = new SDL_Rect();
+           offset->x = Player1->Position->X * 16;
+           offset->y = Player1->Position->Y * 16;
+           
+           SDL_BlitSurface( TextureManager::GetInstance().GetTex("Content/Textures/BlockWall.bmp"), NULL, screen, offset );
+                                   
       }
       
-      void PollInput()
+      void PollInput(SDL_Event* event)
       {
+           Player1->PollInput(event);
       }
       
       
