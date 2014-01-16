@@ -2,9 +2,22 @@
 
 class TextureManager
 {
+      private:
+        TextureManager() {}
+        TextureManager(const TextureManager &);
+        TextureManager& operator=(const TextureManager&);
+        ~TextureManager() {}
+        
       std::map<std::string, SDL_Surface*> Textures;
+        
+        public:
+        static TextureManager& GetInstance()
+        {
+          static TextureManager instance;
+          return instance;
+        }
+        
       
-      public:
              
       void LoadTex(std::string Name)
       {

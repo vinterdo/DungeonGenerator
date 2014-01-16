@@ -20,30 +20,24 @@ using namespace std;
 
 class Engine
 {
-      SDL_Surface *screen;
-      TextureManager* TexManager;
       public:
+             
+      SDL_Surface *screen;
+      DungeonGen* Generator;
       
       Engine()
       {
-              TexManager = new TextureManager();
               cmain();
       } 
-      
-      private:
       
       void cmain()
       {
            LoadContent();
            
-           DungeonGen* Generator = new DungeonGen(150);
            const float StepTime = 0.03f;
-    
+           Generator = new DungeonGen(150);
            Generator->Initalize();
     
-           float dt = 0;
-           float lastUpdate = time(NULL);
-           float accumulator = 0;
     
            // SDL STUFF
     
@@ -59,12 +53,9 @@ class Engine
            }
            atexit (SDL_Quit);
 
-           screen = SDL_SetVideoMode (640, 480, 16, SDL_SWSURFACE | SDL_DOUBLEBUF);
+           screen = SDL_SetVideoMode (1024, 768, 16, SDL_SWSURFACE | SDL_DOUBLEBUF);
            if (screen == NULL)
            {
-               sprintf (msg, "Couldn't set 640x480x16 video mode: %s\n",
-               SDL_GetError ());
-               MessageBox (0, msg, "Error", MB_ICONHAND); 
                free (msg);
                exit (2);
            }
@@ -90,16 +81,22 @@ class Engine
                }
                Draw();
                SDL_Flip( screen );
+               //SDL_Delay(10);
            }
       }
       
       void LoadContent()
       {
-           TexManager->LoadTex("Content/Textures/BlockWall.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/BlockWall.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/StoneWall.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/StoneFloor.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/Door.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/StairsDown.bmp");
+           TextureManager::GetInstance().LoadTex("Content/Textures/StairsUp.bmp");
       }
       
       void Draw()
       {
-           SDL_BlitSurface( TexManager->GetTex("Content/Textures/BlockWall.bmp"), NULL, screen, NULL );
+           Generator->Draw(screen);
       }
 };
