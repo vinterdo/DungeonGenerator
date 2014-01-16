@@ -7,9 +7,9 @@ WINDRES = windres.exe
 RES  = DunGen_private.res
 OBJ  = main.o $(RES)
 LINKOBJ  = main.o $(RES)
-LIBS =  -L"C:/Dev-Cpp/lib" -mwindows -lmingw32 -lSDLmain -lSDL 
-INCS =  -I"C:/Dev-Cpp/include" 
-CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+LIBS =  -L"D:/Dev-Cpp/lib" -mwindows -lmingw32 -lSDLmain -lSDL 
+INCS =  -I"D:/Dev-Cpp/include" 
+CXXINCS =  -I"D:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Dev-Cpp/include/c++/3.4.2"  -I"D:/Dev-Cpp/include" 
 BIN  = DunGen.exe
 CXXFLAGS = $(CXXINCS)  
 CFLAGS = $(INCS) -Dmain=SDL_main 
