@@ -4,7 +4,8 @@ class WorldMap
       public:
       Point* Size;
       Point* Max;
-      char* Map;
+      //char* Map;
+      Tile** Map;
       
       int Objects;
       int ChanceRoom;
@@ -12,6 +13,7 @@ class WorldMap
       
       long OldSeed;
       
+      /*
       enum
       {
         tileUnused = 0,
@@ -23,7 +25,7 @@ class WorldMap
         tileUpStairs,
         tileDownStairs,
         tileChest
-      };
+      };*/
       
       WorldMap(int SizeX, int SizeY)
       {
@@ -31,26 +33,18 @@ class WorldMap
           
           ChanceRoom = 75;
           ChanceCorridor = 25;
-          Map = new char[SizeX * SizeY];
-          
-          for(int y = 0; y < Size->Y; y++)
-             {
-                     for(int x = 0; x < Size->X; x++)
-                     {
-                             Map[(y * Size->X + x)] = 'X';
-                     }
-             }
+          Map = new Tile*[SizeX * SizeY];
           
           CreateDungeon(SizeX, SizeY, 100);
       }
       
       
-      void SetPos(int x, int y, char value)
+      void SetPos(int x, int y, Tile* value)
       {
            Map[(y * Size->X + x)] = value;
       }
       
-      char GetPos(int x, int y)
+      Tile* GetPos(int x, int y)
       {
            return Map[(y * Size->X + x)];
       }
@@ -76,7 +70,7 @@ class WorldMap
        bool MakeCorridor(int x, int y, int lenght, int direction)
       {
         int Lenght = GetRand(2, lenght);
-        char Floor = tileCorridor;
+        Tile* Floor = new TileStoneFloor();
         int Dir = 0;
         if(direction > 0 && direction < 4) Dir = direction;
  
@@ -93,7 +87,7 @@ class WorldMap
                 for(ytemp = y; ytemp > (y- Lenght); ytemp--)
                 {
                     if(ytemp < 0 || ytemp > Size->Y) return false;
-                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                    if(GetPos(xtemp, ytemp) != NULL) return false;
                 }
  
                 for(ytemp = y; ytemp > (y - Lenght); ytemp--)
@@ -111,7 +105,7 @@ class WorldMap
                 for(xtemp = x; xtemp < (x + Lenght); xtemp++)
                 {
                     if(xtemp < 0 || xtemp > Size->X) return false;
-                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                    if(GetPos(xtemp, ytemp) != NULL) return false;
                 }
  
                 for(xtemp = x; xtemp < (x + Lenght); xtemp++)
@@ -128,7 +122,7 @@ class WorldMap
                 for(ytemp = y; ytemp < (y + Lenght); ytemp++)
                 {
                     if(ytemp < 0 || ytemp > Size->Y) return false;
-                    if(GetPos(xtemp, ytemp) != tileUnused) return false;
+                    if(GetPos(xtemp, ytemp) != NULL) return false;
                 }
                 for (ytemp = y; ytemp < (y+Lenght); ytemp++){
                     SetPos(xtemp, ytemp, Floor);
@@ -142,7 +136,7 @@ class WorldMap
  
                 for (xtemp = x; xtemp > (x-Lenght); xtemp--){
                     if (xtemp < 0 || xtemp > Size->X) return false;
-                    if (GetPos(xtemp, ytemp) != tileUnused) return false;
+                    if (GetPos(xtemp, ytemp) != NULL) return false;
                 }
  
                 for (xtemp = x; xtemp > (x-Lenght); xtemp--){
@@ -160,8 +154,8 @@ class WorldMap
 		int xlen = GetRand(4, xlength);
 		int ylen = GetRand(4, ylength);
 		// Set floor and walls
-		int floor = tileDirtFloor; 
-		int wall = tileDirtWall; 
+		Tile* floor = new TileStoneFloor(); 
+		Tile* wall = new TileStoneWall(); 
 		// Direction
 		int dir = 0;
 		if (direction > 0 && direction < 4) dir = direction;
@@ -177,7 +171,7 @@ class WorldMap
 				for (int xtemp = (x-xlen/2); xtemp < (x+(xlen+1)/2); xtemp++)
                 {
 					if (xtemp < 0 || xtemp > Size->X) return false;
-					if (GetPos(xtemp, ytemp) != tileUnused) return false; //no space left...
+					if (GetPos(xtemp, ytemp) != NULL) return false; //no space left...
 				}
 			}
  
@@ -204,7 +198,7 @@ class WorldMap
 				for (int xtemp = x; xtemp < (x+xlen); xtemp++)
                 {
 					if (xtemp < 0 || xtemp > Size->X) return false;
-					if (GetPos(xtemp, ytemp) != tileUnused) return false;
+					if (GetPos(xtemp, ytemp) != NULL) return false;
 				}
 			}
  
@@ -230,7 +224,7 @@ class WorldMap
 				for (int xtemp = (x-xlen/2); xtemp < (x+(xlen+1)/2); xtemp++)
                 {
 					if (xtemp < 0 || xtemp > Size->X) return false;
-					if (GetPos(xtemp, ytemp) != tileUnused) return false;
+					if (GetPos(xtemp, ytemp) != NULL) return false;
 				}
 			}
  
@@ -257,7 +251,7 @@ class WorldMap
                 {
 					if (xtemp < 0 || xtemp > Size->X) 
                        return false;
-					if (GetPos(xtemp, ytemp) != tileUnused) 
+					if (GetPos(xtemp, ytemp) != NULL) 
                        return false;
 				}
 			}
@@ -296,19 +290,19 @@ class WorldMap
 		else Size->Y = iny;
  
 		//redefine the map var, so it's adjusted to our new map size
-		Map = new char[Size->X * Size->Y];
+		Map = new Tile*[Size->X * Size->Y];
  
 		//start with making the "standard stuff" on the map
 		for (int y = 0; y < Size->Y; y++){
 			for (int x = 0; x < Size->X; x++){
 				//ie, making the borders of unwalkable walls
-				if (y == 0) SetPos(x, y, tileStoneWall);
-				else if (y == Size->Y-1) SetPos(x, y, tileStoneWall);
-				else if (x == 0) SetPos(x, y, tileStoneWall);
-				else if (x == Size->X-1) SetPos(x, y, tileStoneWall);
+				if (y == 0) SetPos(x, y, new TileStoneWall());
+				else if (y == Size->Y-1) SetPos(x, y,new TileStoneWall());
+				else if (x == 0) SetPos(x, y, new TileStoneWall());
+				else if (x == Size->X-1) SetPos(x, y, new TileStoneWall());
  
 				//and fill the rest with dirt
-				else SetPos(x, y, tileUnused);
+				else SetPos(x, y, NULL);
 			}
 		}
  

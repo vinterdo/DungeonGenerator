@@ -1,5 +1,6 @@
 class Tile
 {
+      public: 
       std::string Texture;
       int id;
       
@@ -9,5 +10,17 @@ class Tile
            offset->x = Posx * 16;
            offset->y = Posy * 16;
            SDL_BlitSurface( TextureManager::GetInstance().GetTex(Texture), NULL, screen, offset );               
+      }
+      
+      virtual void OnPlayerMoveIn()
+      {
+      }
+      
+      virtual void OnPlayerMoveOut()
+      {
+      }
+      
+      virtual void OnPlayerUsed()
+      {
       }
 };
